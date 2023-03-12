@@ -74,7 +74,7 @@
 .product-contents {
   display: flex;
   flex-direction: column;
-  padding: 9px;
+  padding: 6px;
 }
 
 .product-name {
@@ -95,4 +95,8 @@
 
 .product-avatar {
   width: 24px;
+}
+
+.product-seller a {
+  color: white;
 }
