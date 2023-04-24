@@ -2,6 +2,7 @@
   <head>
     <title>ACSL Market</title>
     <link href="index.css" type=text/css rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body>
     <div id="header">
@@ -15,36 +16,50 @@
         <img src="images/banners/banner1.png" />
       </div>
       <h1>Items for Sale</h1>
-      <div id="product-list">
-        <div class="product-card">
-          <div>
-            <img class="product-img" src="images/products/basketball1.jpeg" />
-          </div>
-          <div class="product-contents">
-            <span class="product-name">basketball1</span>
-            <span class="product-price">50000$</span>
-            <div class="product-seller">
-              <img class="product-avatar" src="images/icons/avatar.png" />
-              <span>ACSL</span>
-            </div>
-          </div>
-        </div>
-        <div class="product-card">
-          <div>
-            <img class="product-img" src="images/products/keyboard1.jpg" />
-          </div>
-          <div class="product-contents">
-            <span class="product-name">basketball1</span>
-            <span class="product-price">30000$</span>
-            <div class="product-seller">
-              <img class="product-avatar" src="images/icons/avatar.png" />
-              <a href="https://uehwan.github.io/people/Ue-Hwan-Kim/">link</a>
-              <span>ACSL</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div id="product-list"></div>
     </div>
     <div id="footer"></div>
   </body>
+  <script>
+    axios
+      .get(
+        "https://072f1b6c-ff17-4526-a87a-dc955c97fb8a.mock.pstmn.io/products"
+      )
+      .then(function (result) {
+        console.log("통신 결과: ", result);
+        const products = result.data.products;
+        let productHtml = "";
+        for (var i = 0; i < products.length; i++) {
+          let product = products[i];
+          productHtml +=
+            '<div class="product-card">' +
+            "<div>" +
+            '<img class="product-img" src="' +
+            product.imageUrl +
+            '" />' +
+            "</div>" +
+            '<div class="product-contents">' +
+            '<span class="product-name">' +
+            product.name +
+            "</span>" +
+            '<span class="product-price">' +
+            product.price +
+            "원" +
+            "</span>" +
+            '<div class="product-seller">' +
+            '<img class="product-avatar" src="images/icons/avatar.png" />' +
+            "<span>" +
+            product.seller +
+            "</span>" +
+            "</div>" +
+            "</div>" +
+            "</div>";
+        }
+
+        document.querySelector("#product-list").innerHTML = productHtml;
+      })
+      .catch(function (error) {
+        console.error("error 발생", error);
+      });
+  </script>
 </html>
